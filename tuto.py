@@ -6,8 +6,7 @@
 import requests
 from bs4 import BeautifulSoup
 import time
-
-links = []
+"""links = []
 
 #Boucle sur la totalité des pages
 for i in range(1):
@@ -92,4 +91,23 @@ for i in range(1):
         #On temporise 1 seconde pour ne pas se faire sortir
         time.sleep(1)
 
-print(links)
+print(links)"""
+
+
+#Puis extraire et écrire csv pour une catégorie
+#<div class="side_categories">
+#categories =[]
+
+#Récupérer toutes les url catégories
+url = 'http://books.toscrape.com/catalogue/category/books_1/index.html'
+categorie_url = 'http://books.toscrape.com/catalogue/category'
+response = requests.get(url)
+if response.ok:
+    soup = BeautifulSoup(response.text, features="html.parser")
+    categories = soup.find('ul', {'class': 'nav nav-list'})
+    categorie = categories.find_all('li')
+    for cat in categorie:
+        a = cat.find('a')
+        link = a['href'].replace('..', '')
+        print(categorie_url+link)
+
